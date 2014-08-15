@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+	<html>
+		<head>	
+			<title>ChatBot</title>
+			<link rel="stylesheet" href="chatbot.css" type="text/css">
+			<script type="text/javascript">
+				function executeBot()
+				{
+					var str=document.getElementById("input").value;					
+					
+					if(/find|search|convert|president|minister|founder|co founder/.test(str))
+					{
+						var str = str.replace("find","");
+						var str = str.replace("convert","");
+						var str = str.replace("search","");
+						window.open("http://www.google.co.in/search?q="+str)
+					}
+					else if(/goto|(go to)/.test(str))
+					{
+						var str = str.replace("goto ","");
+						var str = str.replace("go to ","");
+						var str = str.replace(".com","");
+						var str = str.replace(".co.in","");
+						if(/(.edu)|(.org)/.test(str))
+							window.open("http://www."+str);
+						else
+							window.open("http://www."+str+".com");
+					}
+					else
+					{
+
+						var xmlhttp=new XMLHttpRequest();
+					
+						xmlhttp.onreadystatechange=function()
+						{
+							if (xmlhttp.readyState==4 && xmlhttp.status==200)
+							{
+								document.getElementById("bot").innerHTML=xmlhttp.responseText;
+							}
+						}
+						xmlhttp.open("GET","test.php?q="+str,true);
+					
+						xmlhttp.send();
+					}
+				}
+			</script>
+		</head>
+		<body>
+			<div id="header">
+				<center><span class="topic">Meet Mr. Friday</span></center>
+			</div>
+			<div class="content">
+				<input type="text" placeholder="Ask me a Question" x-webkit-speech id="input"/>
+				<input type="button" class="click" onclick="executeBot()" value="Ask"></button>
+				<div id="bot">
+				<p class="botspeak">Hello</p>
+				</div>
+			</div>
+		</body>
+	</html>
